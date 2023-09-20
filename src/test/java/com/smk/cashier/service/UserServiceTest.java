@@ -20,7 +20,7 @@ class UserServiceTest {
     @Order(2)
     void addUser() {
         User user = new User();
-        user.setUserName("Bina Informatika");
+        user.setUserName("Informatika");
         user.setPassword("HOHOHO");
         UserService.getInstance().addUser(user);
     }

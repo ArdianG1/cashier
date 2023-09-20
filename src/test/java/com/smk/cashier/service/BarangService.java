@@ -16,30 +16,34 @@ public class BarangService {
             barangService=null;
     private BarangService() {
         try {
-            barangServiceReader = new
-                    FileReader("barang.txt");
             barangServiceWriter = new
                     FileWriter("barang.txt");
+            barangServiceReader = new
+                    FileReader("barang.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public static synchronized
-    BarangService getInstance() {
+    public static synchronized BarangService getInstance() {
         if (barangService == null) {
             barangService = new BarangService();
         }
         return barangService;
     }
     private void readFile() {
-        BufferedReader BufferedReader = new BufferedReader(barangServiceReader);
-        List<String> stringList = BufferedReader.lines().toList();
+        BufferedReader bufferedReader = new BufferedReader(barangServiceReader);
+        List<String> stringList = bufferedReader.lines().toList();
         barangList = new LinkedList<>();
         for (String string: stringList) {
             barangList.add(parsingLineToBarang(string));
         }
     }
     private void writeFile() {
+        try {
+            barangServiceWriter = new FileWriter("barang.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         BufferedWriter bufferedWriter = new BufferedWriter(barangServiceWriter);
         for (int i = 0; i < barangList.size(); i++) {
             Barang barang = barangList.get(i);
@@ -71,8 +75,11 @@ public class BarangService {
         while (st.hasMoreElements()) {
             if (id == 0) {
                 barang.setKodeBarang(st.nextToken());
-            } else if (id == 2) {
+            } else if(id == 1) {
                 barang.setNamaBarang(st.nextToken());
+            }
+            else if (id == 2) {
+                barang.setHargaBarang(Integer.parseInt(st.nextToken()));
             }
             id++;
         }
